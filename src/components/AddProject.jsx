@@ -1,20 +1,21 @@
 import React, { useState, useRef } from "react";
 
-const AddProject = () => {
-  const [newProject, setNewProject] = useState({});
+const AddProject = ({ onAdd }) => {
   const titleRef = useRef();
   const descRef = useRef();
   const dateRef = useRef();
+  let projectInfo = {};
 
   const handleSave = () => {
-    setNewProject({
+    projectInfo = {
       title: titleRef.current.value,
       desc: descRef.current.value,
       date: dateRef.current.value,
-    });
+    };
     titleRef.current.value = "";
     descRef.current.value = "";
     dateRef.current.value = "";
+    onAdd(projectInfo);
   };
 
   const handleCancel = () => {
