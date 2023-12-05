@@ -7,15 +7,21 @@ const AddProject = ({ onAdd }) => {
   let projectInfo = {};
 
   const handleSave = () => {
-    projectInfo = {
-      title: titleRef.current.value,
-      desc: descRef.current.value,
-      date: dateRef.current.value,
-    };
-    titleRef.current.value = "";
-    descRef.current.value = "";
-    dateRef.current.value = "";
-    onAdd(projectInfo);
+    if (
+      titleRef.current.value.trim().length !== 0 &&
+      descRef.current.value.trim().length !== 0 &&
+      dateRef.current.value.trim().value !== 0
+    ) {
+      projectInfo = {
+        title: titleRef.current.value,
+        desc: descRef.current.value,
+        date: dateRef.current.value,
+      };
+      titleRef.current.value = "";
+      descRef.current.value = "";
+      dateRef.current.value = "";
+      onAdd(projectInfo);
+    }
   };
 
   const handleCancel = () => {
@@ -40,7 +46,13 @@ const AddProject = ({ onAdd }) => {
           Save
         </button>
       </div>
-      <form id="createProject" class="flex flex-col">
+      <form
+        id="createProject"
+        class="flex flex-col"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <label class="font-bold text-dark-blue">TITLE</label>
         <input
           ref={titleRef}
