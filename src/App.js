@@ -12,6 +12,7 @@ const App = () => {
       return [
         ...prevState,
         {
+          id: Math.random(),
           title: projectInfo.title,
           desc: projectInfo.desc,
           date: projectInfo.date,
@@ -31,15 +32,29 @@ const App = () => {
   }
 
   const handleDeleteProject = (info) => {
-    const arr = projects.filter(project => project.title !== info);
+    const arr = projects.filter(project => project.id !== info.id);
     setProjects(arr);
     setCurrentView("add");
   }
 
+
   const handleAddNewTask = (projectTitle, task) => {
-    console.log(task);
-    
-    
+    setProjects(prevState => {
+      const arr = prevState.map((project) => {
+        if(project.title === projectTitle){
+          return (
+            {
+              ...project,
+              todos: [...project.todos, task]
+            }
+          )
+        }
+        else return project;
+      })
+      return (
+        arr
+      )
+    })
   } 
 
   return (

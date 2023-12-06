@@ -4,16 +4,17 @@ import React, {useRef, useState} from 'react';
 const ProjectView = ({projectInfo, deleteProject, addNewTask} ) => {
 
     const taskInput = useRef();
-    const [newTask, setNewTask] = useState();
+    // const [newTask, setNewTask] = useState();
     const handleClick = (info) => {
-        deleteProject(info.title);
+        deleteProject(info);
     }
 
     const handleAddTask = () => {
-        setNewTask(taskInput.current.value);
+        let newTask = taskInput.current.value;
         taskInput.current.value = '';
         addNewTask(projectInfo.title, newTask)
     }
+    console.log(projectInfo);
 
     return (
         <section class="flex flex-col flex-1 w-full p-20">
@@ -31,7 +32,7 @@ const ProjectView = ({projectInfo, deleteProject, addNewTask} ) => {
                 <button class="p-2 hover:shadow-md hover:-translate-y-0.5 transition" onClick={handleAddTask}>Add Task</button>
             </div>
             <div>Task list</div> 
-            {/* task list */}
+            
         </section>
     );
 }
