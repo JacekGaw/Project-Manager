@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import TaskList from './TaskList';
+
 
 const ProjectView = ({projectInfo, deleteProject, addNewTask} ) => {
 
@@ -30,7 +30,8 @@ const ProjectView = ({projectInfo, deleteProject, addNewTask} ) => {
                 <input ref={taskInput} type="text" class="bg-lightest-blue p-2"></input>
                 <button class="p-2 hover:shadow-md hover:-translate-y-0.5 transition" onClick={handleAddTask}>Add Task</button>
             </div>
-            <TaskList taskList={projectInfo.tasks}/>
+            <div>Task list</div> 
+            {/* task list */}
         </section>
     );
 }
