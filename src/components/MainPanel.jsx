@@ -2,7 +2,7 @@ import React from "react";
 import AddProject from "./AddProject";
 import ProjectView from "./ProjectView";
 
-const MainPanel = ({ onAddProject, panelView, onChangeView, onShowProject, onDeleteProject}) => {
+const MainPanel = ({ onAddProject, panelView, onChangeView, onShowProject, onDeleteProject, onAddNewTask}) => {
 
   return (
     <section
@@ -21,7 +21,7 @@ const MainPanel = ({ onAddProject, panelView, onChangeView, onShowProject, onDel
 
       {panelView === "add" && <AddProject onAdd={onAddProject} />}
       {panelView === "info" && (
-        <ProjectView projectInfo={onShowProject} deleteProject={onDeleteProject}/>
+        <ProjectView projectInfo={onShowProject} deleteProject={onDeleteProject} addNewTask={onAddNewTask}/>
       )}
     </section>
   );

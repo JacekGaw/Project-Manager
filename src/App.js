@@ -15,6 +15,7 @@ const App = () => {
           title: projectInfo.title,
           desc: projectInfo.desc,
           date: projectInfo.date,
+          todos: []
         },
       ];
     });
@@ -35,6 +36,12 @@ const App = () => {
     setCurrentView("add");
   }
 
+  const handleAddNewTask = (projectTitle, task) => {
+    console.log(task);
+    
+    
+  } 
+
   return (
     <main class="h-screen flex-col">
       <header class="h-1/5 flex justify-center items-center">
@@ -42,7 +49,7 @@ const App = () => {
       </header>
       <section class="flex max-w-screen-xl mx-auto h-4/5">
         <SidePanel projectsInfo={projects} onChangeView={handleChangeView} onProjectClick={handleProjectClick}/>
-        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject}/>
+        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject} onAddNewTask={handleAddNewTask}/>
       </section>
     </main>
   );

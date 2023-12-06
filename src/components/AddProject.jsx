@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 
 const AddProject = ({ onAdd }) => {
   const titleRef = useRef();
