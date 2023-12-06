@@ -27,7 +27,8 @@ const App = () => {
   }
 
   const handleProjectClick = (info) => {
-    setProjectInfo(info);
+    setProjectInfo(projects.filter(project => project.id === info));
+    console.log(projectInfo);
     setCurrentView("info");
   }
 
@@ -45,7 +46,7 @@ const App = () => {
           return (
             {
               ...project,
-              todos: [...project.todos, task]
+              todos: [...project.todos,{title: task, id: Math.random()}]
             }
           )
         }

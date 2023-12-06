@@ -10,7 +10,7 @@ const ProjectList = ({ projects, onChangeView, projectClick }) => {
   return (
     <ul role="list">
       {projects.map((project) => {
-        return <li key={project.id} onClick={() => handleClick(project)}>{project.title}</li>;
+        return <li key={project.id} onClick={() => handleClick(project.id)}>{project.title}</li>;
       })}
     </ul>
   );

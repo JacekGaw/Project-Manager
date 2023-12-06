@@ -14,7 +14,7 @@ const ProjectView = ({projectInfo, deleteProject, addNewTask} ) => {
         taskInput.current.value = '';
         addNewTask(projectInfo.title, newTask)
     }
-    console.log(projectInfo);
+
 
     return (
         <section class="flex flex-col flex-1 w-full p-20">
