@@ -27,8 +27,7 @@ const App = () => {
   }
 
   const handleProjectClick = (info) => {
-    setProjectInfo(projects.filter(project => project.id === info));
-    console.log(projectInfo);
+    setProjectInfo(projects.find(project => project.id === info));
     setCurrentView("info");
   }
 
@@ -39,10 +38,10 @@ const App = () => {
   }
 
 
-  const handleAddNewTask = (projectTitle, task) => {
+  const handleAddNewTask = (projectId, task) => {
     setProjects(prevState => {
       const arr = prevState.map((project) => {
-        if(project.title === projectTitle){
+        if(project.id === projectId){
           return (
             {
               ...project,
@@ -55,8 +54,9 @@ const App = () => {
       return (
         arr
       )
-    })
+    });
   } 
+
 
   return (
     <main class="h-screen flex-col">
@@ -65,7 +65,7 @@ const App = () => {
       </header>
       <section class="flex max-w-screen-xl mx-auto h-4/5">
         <SidePanel projectsInfo={projects} onChangeView={handleChangeView} onProjectClick={handleProjectClick}/>
-        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject} onAddNewTask={handleAddNewTask}/>
+        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject} onAddNewTask={handleAddNewTask} onAddTodos={projects}/>
       </section>
     </main>
   );
