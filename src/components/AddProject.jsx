@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
+import Modal from "./Modal";
 
 const AddProject = ({ onAdd }) => {
+  const modal = useRef();
   const titleRef = useRef();
   const descRef = useRef();
   const dateRef = useRef();
@@ -8,9 +10,17 @@ const AddProject = ({ onAdd }) => {
 
   const handleSave = () => {
     if (
+      titleRef.current.value.trim().length === 0 ||
+      descRef.current.value.trim().length === 0 ||
+      dateRef.current.value.trim().length === 0
+    ){
+      modal.current.open();
+      return;
+    }
+    if (
       titleRef.current.value.trim().length !== 0 &&
       descRef.current.value.trim().length !== 0 &&
-      dateRef.current.value.trim().value !== 0
+      dateRef.current.value.trim().length !== 0
     ) {
       projectInfo = {
         title: titleRef.current.value,
@@ -31,6 +41,11 @@ const AddProject = ({ onAdd }) => {
   };
 
   return (
+    <>
+    <Modal ref={modal}>
+      <h2 className="text-3xl font-bold mb-5">Invalid input!</h2>
+      <p className="text-slate-700 mb-5">Make sure that every input field is filled! You can't make a new projet without title, description or date!</p>
+    </Modal>
     <section class="flex flex-col flex-1 w-full p-20">
       <div class="flex justify-end mb-2">
         <button
@@ -69,6 +84,7 @@ const AddProject = ({ onAdd }) => {
         <input ref={dateRef} type="date" class="bg-lightest-blue p-2"></input>
       </form>
     </section>
+    </>
   );
 };
 

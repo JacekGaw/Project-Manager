@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import Tasks from "./Tasks";
+import Modal from "./Modal";
 
 const ProjectView = ({
   projectInfo,
@@ -8,6 +9,7 @@ const ProjectView = ({
   onAddTodo,
   onDeleteTodo,
 }) => {
+    const modal = useRef();
   const taskInput = useRef();
   // const [newTask, setNewTask] = useState();
   const handleClick = (info) => {
@@ -17,10 +19,15 @@ const ProjectView = ({
   const handleAddTask = () => {
     let newTask = taskInput.current.value;
     taskInput.current.value = "";
-    addNewTask(projectInfo.id, newTask);
+    newTask.length > 0 ? addNewTask(projectInfo.id, newTask): modal.current.open();
   };
 
   return (
+    <>
+    <Modal ref={modal}>
+    <h2 className="text-3xl font-bold mb-5">Invalid input!</h2>
+      <p className="text-slate-700 mb-5">Empty task? If you have nothing to do, just don't add one. If you have, please fill input!</p>
+    </Modal>
     <section class="flex flex-col flex-1 w-full p-20">
       <header class="flex justify-between mb-2">
         <h2 class="text-4xl font-bold text-dark-blue">{projectInfo.title}</h2>
@@ -32,7 +39,7 @@ const ProjectView = ({
         </button>
       </header>
       <p class="text-light-blue mb-5">{projectInfo.date}</p>
-      <p class="text-ml border-b-2 border-lightest-blue pb-5">
+      <p class="text-ml border-b-2 border-lightest-blue pb-5 whitespace-pre-line">
         {projectInfo.desc}
       </p>
       <header class="flex justify-between mb-2 mt-5">
@@ -53,6 +60,7 @@ const ProjectView = ({
         deleteTodo={onDeleteTodo}
       />
     </section>
+    </>
   );
 };
 
