@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import Tasks from './Tasks';
 
 
-const ProjectView = ({projectInfo, deleteProject, addNewTask, onAddTodo} ) => {
+const ProjectView = ({projectInfo, deleteProject, addNewTask, onAddTodo, onDeleteTodo} ) => {
 
     const taskInput = useRef();
     // const [newTask, setNewTask] = useState();
@@ -31,7 +31,7 @@ const ProjectView = ({projectInfo, deleteProject, addNewTask, onAddTodo} ) => {
                 <input ref={taskInput} type="text" class="bg-lightest-blue p-2"></input>
                 <button class="p-2 hover:shadow-md hover:-translate-y-0.5 transition" onClick={handleAddTask}>Add Task</button>
             </div>
-            <Tasks taskList={onAddTodo} projectId={projectInfo.id} />
+            <Tasks taskList={onAddTodo} projectId={projectInfo.id} deleteTodo={onDeleteTodo} />
         </section>
     );
 }

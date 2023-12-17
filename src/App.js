@@ -57,6 +57,25 @@ const App = () => {
     });
   } 
 
+  const handleDeleteTodo = (projectID, todoID) => {
+    setProjects(prevState => {
+      const arr = prevState.map((project) => {
+        if(project.id === projectID){
+          const newTodos = project.todos.filter((todo) => todo.id !== todoID);
+          return (
+            {
+              ...project,
+              todos: newTodos
+            }
+          )
+        }
+        else return project;
+      })
+      return (
+        arr
+      )
+    });
+  }
 
   return (
     <main class="h-screen flex-col">
@@ -65,7 +84,7 @@ const App = () => {
       </header>
       <section class="flex max-w-screen-xl mx-auto h-4/5">
         <SidePanel projectsInfo={projects} onChangeView={handleChangeView} onProjectClick={handleProjectClick}/>
-        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject} onAddNewTask={handleAddNewTask} onAddTodos={projects}/>
+        <MainPanel onAddProject={addProject} panelView={currentView} onChangeView={handleChangeView} onShowProject={projectInfo} onDeleteProject={handleDeleteProject} onAddNewTask={handleAddNewTask} onAddTodos={projects} onDeleteTodo={handleDeleteTodo}/>
       </section>
     </main>
   );
