@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ProjectsContext } from "../store/projects-context";
 
-const Tasks = ({ taskList, projectId, deleteTodo }) => {
+const Tasks = ({ taskList, projectId }) => {
   let todosList = taskList.filter((project) => project.id === projectId)[0]
     .todos;
+
+    const {deleteTask} = useContext(ProjectsContext);
 
   return (
     <>
@@ -15,7 +18,7 @@ const Tasks = ({ taskList, projectId, deleteTodo }) => {
             <li
               className="bg-slate-100 px-5 py-2 my-2 cursor-pointer"
               key={todo.id}
-              onClick={() => deleteTodo(projectId, todo.id)}
+              onClick={() => deleteTask(projectId, todo.id)}
             >
               {todo.title}
             </li>

@@ -52,7 +52,7 @@ const App = () => {
     });
   };
 
-  const handleDeleteTodo = (projectID, todoID) => {
+  const handleDeleteTask = (projectID, todoID) => {
     setProjects((prevState) => {
       const arr = prevState.map((project) => {
         if (project.id === projectID) {
@@ -72,7 +72,9 @@ const App = () => {
     testValue: "Testing context",
     projectClick: handleProjectClick,
     projectAdd: addProject,
-    projectDelete: handleDeleteProject
+    projectDelete: handleDeleteProject,
+    addTask: handleAddNewTask,
+    deleteTask: handleDeleteTask
   }
 
   return (
@@ -89,9 +91,7 @@ const App = () => {
           panelView={currentView}
           onChangeView={handleChangeView}
           onShowProject={projectInfo}
-          onAddNewTask={handleAddNewTask}
           onAddTodos={projects}
-          onDeleteTodo={handleDeleteTodo}
         />
       </section>
     </main>

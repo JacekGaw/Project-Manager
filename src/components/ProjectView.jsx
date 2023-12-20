@@ -5,11 +5,9 @@ import { ProjectsContext } from "../store/projects-context";
 
 const ProjectView = ({
   projectInfo,
-  addNewTask,
   onAddTodo,
-  onDeleteTodo,
 }) => {
-  const {projectDelete} = useContext(ProjectsContext);
+  const {projectDelete, addTask, deleteTask} = useContext(ProjectsContext);
     const modal = useRef();
   const taskInput = useRef();
 
@@ -17,7 +15,7 @@ const ProjectView = ({
   const handleAddTask = () => {
     let newTask = taskInput.current.value;
     taskInput.current.value = "";
-    newTask.length > 0 ? addNewTask(projectInfo.id, newTask): modal.current.open();
+    newTask.length > 0 ? addTask(projectInfo.id, newTask): modal.current.open();
   };
 
   return (
@@ -55,7 +53,6 @@ const ProjectView = ({
       <Tasks
         taskList={onAddTodo}
         projectId={projectInfo.id}
-        deleteTodo={onDeleteTodo}
       />
     </section>
     </>

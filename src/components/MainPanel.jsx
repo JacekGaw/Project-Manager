@@ -6,9 +6,7 @@ const MainPanel = ({
   panelView,
   onChangeView,
   onShowProject,
-  onAddNewTask,
   onAddTodos,
-  onDeleteTodo,
 }) => {
   return (
     <section
@@ -32,9 +30,7 @@ const MainPanel = ({
       {panelView === "info" && (
         <ProjectView
           projectInfo={onShowProject}
-          addNewTask={onAddNewTask}
           onAddTodo={onAddTodos}
-          onDeleteTodo={onDeleteTodo}
         />
       )}
     </section>
