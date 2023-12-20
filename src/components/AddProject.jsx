@@ -2,8 +2,8 @@ import React, { useRef, useContext } from "react";
 import { ProjectsContext } from "../store/projects-context";
 import Modal from "./Modal";
 
-const AddProject = ({ onAdd }) => {
-  const {projects, testValue} = useContext(ProjectsContext);
+const AddProject = () => {
+  const {projects, testValue, projectAdd} = useContext(ProjectsContext);
   console.log(testValue);
   const modal = useRef();
   const titleRef = useRef();
@@ -33,7 +33,7 @@ const AddProject = ({ onAdd }) => {
       titleRef.current.value = "";
       descRef.current.value = "";
       dateRef.current.value = "";
-      onAdd(projectInfo);
+      projectAdd(projectInfo);
     }
   };
 

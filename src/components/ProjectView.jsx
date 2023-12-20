@@ -1,20 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useContext } from "react";
 import Tasks from "./Tasks";
 import Modal from "./Modal";
+import { ProjectsContext } from "../store/projects-context";
 
 const ProjectView = ({
   projectInfo,
-  deleteProject,
   addNewTask,
   onAddTodo,
   onDeleteTodo,
 }) => {
+  const {projectDelete} = useContext(ProjectsContext);
     const modal = useRef();
   const taskInput = useRef();
-  // const [newTask, setNewTask] = useState();
-  const handleClick = (info) => {
-    deleteProject(info);
-  };
+
 
   const handleAddTask = () => {
     let newTask = taskInput.current.value;
@@ -33,7 +31,7 @@ const ProjectView = ({
         <h2 class="text-4xl font-bold text-dark-blue">{projectInfo.title}</h2>
         <button
           class="p-2 mx-2 hover:shadow-md hover:-translate-y-0.5 transition"
-          onClick={() => handleClick(projectInfo)}
+          onClick={() => projectDelete(projectInfo)}
         >
           Delete
         </button>

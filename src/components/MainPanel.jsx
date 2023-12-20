@@ -3,11 +3,9 @@ import AddProject from "./AddProject";
 import ProjectView from "./ProjectView";
 
 const MainPanel = ({
-  onAddProject,
   panelView,
   onChangeView,
   onShowProject,
-  onDeleteProject,
   onAddNewTask,
   onAddTodos,
   onDeleteTodo,
@@ -30,11 +28,10 @@ const MainPanel = ({
         </div>
       )}
 
-      {panelView === "add" && <AddProject onAdd={onAddProject} />}
+      {panelView === "add" && <AddProject />}
       {panelView === "info" && (
         <ProjectView
           projectInfo={onShowProject}
-          deleteProject={onDeleteProject}
           addNewTask={onAddNewTask}
           onAddTodo={onAddTodos}
           onDeleteTodo={onDeleteTodo}

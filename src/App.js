@@ -70,7 +70,9 @@ const App = () => {
   const ctxValue = {
     projects: projects,
     testValue: "Testing context",
-    projectClick: handleProjectClick
+    projectClick: handleProjectClick,
+    projectAdd: addProject,
+    projectDelete: handleDeleteProject
   }
 
   return (
@@ -84,11 +86,9 @@ const App = () => {
           onChangeView={handleChangeView}
         />
         <MainPanel
-          onAddProject={addProject}
           panelView={currentView}
           onChangeView={handleChangeView}
           onShowProject={projectInfo}
-          onDeleteProject={handleDeleteProject}
           onAddNewTask={handleAddNewTask}
           onAddTodos={projects}
           onDeleteTodo={handleDeleteTodo}
