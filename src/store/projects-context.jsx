@@ -1,4 +1,4 @@
-import React, { createContext, useState, useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 
 export const ProjectsContext = createContext({
   projects: [],
@@ -29,26 +29,65 @@ const projectsReducer = (state, action) => {
       ...state,
       projectList: newArr,
     };
-  }
-  if (action.type === "DELETE_PROJECT") {
+  } else if (action.type === "DELETE_PROJECT") {
     const arr = state.projectList.filter(
-      (project) => project.id !== action.payload.id
+      (project) => project.id !== action.payload.info.id
     );
     return {
       ...state,
       projectList: arr,
+      currView: "add",
     };
   } else if (action.type === "CLICK_PROJECT") {
     const pom = state.projectList.find(
-      (project) => project.id === action.payload
+      (project) => project.id === action.payload.info
     );
     // setProjectInfo(projects.find((project) => project.id === info));
     return {
       ...state,
       projectInf: pom,
+      view: action.payload.view,
     };
-  }
+  } else if (action.type === "ADD_TASK") {
+    const arr = state.projectList.map((project) => {
+      if (project.id === action.payload.projectId) {
+        return {
+          ...project,
+          todos: [
+            ...project.todos,
+            { title: action.payload.task, id: Math.random() },
+          ],
+        };
+      } else return project;
+    });
 
+    return {
+      ...state,
+      projectList: arr,
+    };
+  } else if (action.type === "DELETE_TASK") {
+    const arr = state.projectList.map((project) => {
+      if (project.id === action.payload.projectID) {
+        const newTodos = project.todos.filter(
+          (todo) => todo.id !== action.payload.todoID
+        );
+        return {
+          ...project,
+          todos: newTodos,
+        };
+      } else return project;
+    });
+
+    return {
+      ...state,
+      projectList: arr,
+    };
+  } else if (action.type === "CHANGE_VIEW") {
+    return {
+      ...state,
+      currView: action.payload
+    }
+  }
   return state;
 };
 
@@ -56,10 +95,8 @@ const ProjectsContextProvider = ({ children }) => {
   const [projectsState, projectsDispatch] = useReducer(projectsReducer, {
     projectList: [],
     projectInf: "",
+    currView: "start",
   });
-  const [projects, setProjects] = useState([]);
-  const [currentView, setCurrentView] = useState("start");
-  const [projectInfo, setProjectInfo] = useState();
 
   const addProject = (projectInfo) => {
     projectsDispatch({
@@ -69,52 +106,49 @@ const ProjectsContextProvider = ({ children }) => {
   };
 
   const handleChangeView = (newView) => {
-    setCurrentView(newView);
+    projectsDispatch({
+      type: "CHANGE_VIEW",
+      payload: newView,
+    });
   };
 
   const handleProjectClick = (info) => {
     projectsDispatch({
       type: "CLICK_PROJECT",
-      payload: info,
+      payload: {
+        info: info,
+        view: "info",
+      },
     });
-
-    setCurrentView("info");
   };
 
   const handleDeleteProject = (info) => {
     projectsDispatch({
       type: "DELETE_PROJECT",
-      payload: info,
+      payload: {
+        info: info,
+        view: "add",
+      },
     });
-    setCurrentView("add");
   };
 
   const handleAddNewTask = (projectId, task) => {
-    setProjects((prevState) => {
-      const arr = prevState.map((project) => {
-        if (project.id === projectId) {
-          return {
-            ...project,
-            todos: [...project.todos, { title: task, id: Math.random() }],
-          };
-        } else return project;
-      });
-      return arr;
+    projectsDispatch({
+      type: "ADD_TASK",
+      payload: {
+        projectId,
+        task,
+      },
     });
   };
 
   const handleDeleteTask = (projectID, todoID) => {
-    setProjects((prevState) => {
-      const arr = prevState.map((project) => {
-        if (project.id === projectID) {
-          const newTodos = project.todos.filter((todo) => todo.id !== todoID);
-          return {
-            ...project,
-            todos: newTodos,
-          };
-        } else return project;
-      });
-      return arr;
+    projectsDispatch({
+      type: "DELETE_TASK",
+      payload: {
+        projectID,
+        todoID,
+      },
     });
   };
 
@@ -126,7 +160,7 @@ const ProjectsContextProvider = ({ children }) => {
     addTask: handleAddNewTask,
     deleteTask: handleDeleteTask,
     changeView: handleChangeView,
-    currentView: currentView,
+    currentView: projectsState.currView,
     showProject: projectsState.projectInf,
   };
 
@@ -138,77 +172,3 @@ const ProjectsContextProvider = ({ children }) => {
 };
 
 export default ProjectsContextProvider;
-
-// const shoppingCartReducer = (state, action) => {
-//   if (action.type === "ADD_ITEM") {
-//     const updatedItems = [...state.items];
-
-//     const existingCartItemIndex = updatedItems.findIndex(
-//       (cartItem) => cartItem.id === action.payload
-//     );
-//     const existingCartItem = updatedItems[existingCartItemIndex];
-
-//     if (existingCartItem) {
-//       const updatedItem = {
-//         ...existingCartItem,
-//         quantity: existingCartItem.quantity + 1,
-//       };
-//       updatedItems[existingCartItemIndex] = updatedItem;
-//     } else {
-//       const product = DUMMY_PRODUCTS.find(
-//         (product) => product.id === action.payload
-//       );
-//       updatedItems.push({
-//         id: action.payload,
-//         name: product.title,
-//         price: product.price,
-//         quantity: 1,
-//       });
-//     }
-
-//     return {
-//       ...state,
-//       items: updatedItems,
-//     };
-//   }
-//   if (action.type === "UPDATE_ITEM") {
-//     const updatedItems = [...state.items];
-//     const updatedItemIndex = updatedItems.findIndex(
-//       (item) => item.id === action.payload.productId
-//     );
-
-//     const updatedItem = {
-//       ...updatedItems[updatedItemIndex],
-//     };
-
-//     updatedItem.quantity += action.payload.amount;
-
-//     if (updatedItem.quantity <= 0) {
-//       updatedItems.splice(updatedItemIndex, 1);
-//     } else {
-//       updatedItems[updatedItemIndex] = updatedItem;
-//     }
-
-//     return {
-//       ...state,
-//       items: updatedItems,
-//     };
-//   }
-
-//   return state;
-// };
-
-// const CartContextProvider = ({ children }) => {
-//   const [shoppingCartState, shoppingCartDispatch] = useReducer(
-//     shoppingCartReducer,
-//     {
-//       items: [],
-//     }
-//   );
-
-//   function handleAddItemToCart(id) {
-//     shoppingCartDispatch({
-//       type: "ADD_ITEM",
-//       payload: id,
-//     });
-//   }
