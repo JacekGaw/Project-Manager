@@ -1,11 +1,11 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { ProjectsContext } from "../store/projects-context";
 
-const Tasks = ({ taskList, projectId }) => {
-  let todosList = taskList.filter((project) => project.id === projectId)[0]
-    .todos;
+const Tasks = ({ projectId }) => {
+  const { projects, deleteTask } = useContext(ProjectsContext);
 
-    const {deleteTask} = useContext(ProjectsContext);
+  let todosList = projects.filter((project) => project.id === projectId)[0]
+    .todos;
 
   return (
     <>
