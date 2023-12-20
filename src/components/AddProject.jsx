@@ -1,7 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import { ProjectsContext } from "../store/projects-context";
 import Modal from "./Modal";
 
 const AddProject = ({ onAdd }) => {
+  const {projects, testValue} = useContext(ProjectsContext);
+  console.log(testValue);
   const modal = useRef();
   const titleRef = useRef();
   const descRef = useRef();

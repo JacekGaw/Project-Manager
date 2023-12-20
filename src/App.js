@@ -68,7 +68,9 @@ const App = () => {
   };
 
   const ctxValue = {
-    projects: []
+    projects: projects,
+    testValue: "Testing context",
+    projectClick: handleProjectClick
   }
 
   return (
@@ -79,9 +81,7 @@ const App = () => {
       </header>
       <section class="flex max-w-screen-xl mx-auto h-4/5">
         <SidePanel
-          projectsInfo={projects}
           onChangeView={handleChangeView}
-          onProjectClick={handleProjectClick}
         />
         <MainPanel
           onAddProject={addProject}

@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import ProjectList from "./ProjectList";
+import { ProjectsContext } from "../store/projects-context";
 
-const SidePanel = ({ projectsInfo, onChangeView, onProjectClick }) => {
+const SidePanel = ({ onChangeView}) => {
+  const {projects} = useContext(ProjectsContext);
+
   return (
     <aside class="flex-none bg-dark-blue py-10 pl-10 pr-20 flex-col text-white">
       <header>
@@ -10,7 +13,7 @@ const SidePanel = ({ projectsInfo, onChangeView, onProjectClick }) => {
       <button class="bg-medium-blue px-4 py-2 my-5 hover:translate-x-1 transition" onClick={() => onChangeView("add")}>
         + Add Project
       </button>
-      <ProjectList projects={projectsInfo} onChangeView={onChangeView} projectClick={onProjectClick}/>
+      <ProjectList  onChangeView={onChangeView} />
     </aside>
   );
 };

@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
+import { ProjectsContext } from "../store/projects-context";
 
-const ProjectList = ({ projects, onChangeView, projectClick }) => {
+
+const ProjectList = ({  onChangeView }) => {
+  
+  const {projects, projectClick} = useContext(ProjectsContext);
+  
   const handleClick = (project) => {
     onChangeView = "info";
     projectClick(project);
